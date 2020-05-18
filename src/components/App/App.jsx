@@ -1,3 +1,4 @@
+import 'normalize.css';
 import React from 'react';
 import { AppHeader } from '../AppHeader/AppHeader';
 import { ButtonFilter } from '../ButtonFilter/ButtonFilter';
