@@ -26,6 +26,7 @@ export class TodoItem extends Component {
   };
 
   render() {
+    const { todo, onDeleteItem } = this.props;
     const { done, important } = this.state;
 
     let todoListItem = 'todo-list-item d-flex';
@@ -39,13 +40,13 @@ export class TodoItem extends Component {
     return (
       <span className={todoListItem}>
         <span className="todo-list-item-name" onClick={this.onHandleClickItem}>
-          {this.props.todo}
+          {todo}
         </span>
         <span className="item-button">
           <button type="button" className="btn btn-outline-success btn-sm" onClick={this.onHandleClickImportant}>
             <i className="fa fa-exclamation" />
           </button>
-          <button type="button" className="btn btn-outline-danger btn-sm">
+          <button type="button" className="btn btn-outline-danger btn-sm" onClick={onDeleteItem}>
             <i className="fa fa-trash-o" />
           </button>
         </span>
