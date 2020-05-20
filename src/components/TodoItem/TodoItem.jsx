@@ -7,15 +7,21 @@ export class TodoItem extends Component {
     important: false,
   };
 
+  /** Функция выполнения элемента списка */
   onHandleClickItem = () => {
-    this.setState({
-      done: true,
+    this.setState(({ done }) => {
+      return {
+        done: !done,
+      };
     });
   };
 
+  /** Функция замены важности элемента списка */
   onHandleClickImportant = () => {
-    this.setState({
-      important: true,
+    this.setState(({ important }) => {
+      return {
+        important: !important,
+      };
     });
   };
 
