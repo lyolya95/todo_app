@@ -73,7 +73,16 @@ export class App extends Component {
   };
 
   /** Функция отмечает важность элемента */
-  onToggleImportant = (id) => {};
+  onToggleImportant = (id) => {
+    this.setState(({ todos }) => {
+      this.findId(id);
+      const newItem = { ...todos[this.index], important: !todos[this.index].important };
+      const newTodos = [...todos.slice(0, this.index), newItem, ...todos.slice(this.index + 1)];
+      return {
+        todos: newTodos,
+      };
+    });
+  };
 
   render() {
     return (
