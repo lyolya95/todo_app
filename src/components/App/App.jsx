@@ -10,8 +10,6 @@ import './App.css';
 export class App extends Component {
   /** id элемента списка */
   maxId = 1;
-  /** id выбранного элемента */
-  index = 0;
 
   state = {
     todos: [
@@ -32,17 +30,18 @@ export class App extends Component {
     };
   }
 
-  /** Найти индекс элемента */
-  findId = (id) => {
-    const { todos } = this.state;
-    return (this.index = todos.findIndex((el) => el.id === id));
-  };
+  /** Функция меняющая свойство объекта */
+  changeProperty(arr, id, property) {
+    const index = arr.findIndex((el) => el.id === id);
+    const newItem = { ...arr[index], [property]: !arr[index][property] };
+    return [...arr.slice(0, index), newItem, ...arr.slice(index + 1)];
+  }
 
   /** Удаление элемента по нажатию */
   deleteItem = (id) => {
     this.setState(({ todos }) => {
-      this.findId(id);
-      const newTodos = [...todos.slice(0, this.index), ...todos.slice(this.index + 1)];
+      const index = todos.findIndex((el) => el.id === id);
+      const newTodos = [...todos.slice(0, index), ...todos.slice(index + 1)];
       return {
         todos: newTodos,
       };
@@ -63,11 +62,8 @@ export class App extends Component {
   /** Функция отмечает "Выполнено" */
   onToggleDone = (id) => {
     this.setState(({ todos }) => {
-      this.findId(id);
-      const newItem = { ...todos[this.index], done: !todos[this.index].done };
-      const newTodos = [...todos.slice(0, this.index), newItem, ...todos.slice(this.index + 1)];
       return {
-        todos: newTodos,
+        todos: this.changeProperty(todos, id, 'done'),
       };
     });
   };
@@ -75,25 +71,23 @@ export class App extends Component {
   /** Функция отмечает важность элемента */
   onToggleImportant = (id) => {
     this.setState(({ todos }) => {
-      this.findId(id);
-      const newItem = { ...todos[this.index], important: !todos[this.index].important };
-      const newTodos = [...todos.slice(0, this.index), newItem, ...todos.slice(this.index + 1)];
       return {
-        todos: newTodos,
+        todos: this.changeProperty(todos, id, 'important'),
       };
     });
   };
 
   render() {
-    const doneCount = this.state.todos.filter((el) => el.done).length;
-    const notDone = this.state.todos.length - doneCount;
+    const { todos } = this.state;
+    const doneCount = todos.filter((el) => el.done).length;
+    const notDone = todos.length - doneCount;
     return (
       <div className="app">
         <AppHeader done={doneCount} notDone={notDone} />
         <Search />
         <ButtonFilter />
         <TodoList
-          todos={this.state.todos}
+          todos={todos}
           onDeleteItem={this.deleteItem}
           onToggleDone={this.onToggleDone}
           onToggleImportant={this.onToggleImportant}
