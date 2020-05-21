@@ -85,9 +85,11 @@ export class App extends Component {
   };
 
   render() {
+    const doneCount = this.state.todos.filter((el) => el.done).length;
+    const notDone = this.state.todos.length - doneCount;
     return (
       <div className="app">
-        <AppHeader />
+        <AppHeader done={doneCount} notDone={notDone} />
         <Search />
         <ButtonFilter />
         <TodoList
