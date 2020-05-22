@@ -18,6 +18,7 @@ export class App extends Component {
       this.createTodoItem('Running in parke'),
       this.createTodoItem('Learn React'),
     ],
+    labelSearch: '',
   };
 
   /** Функция создания списка элементов */
@@ -77,22 +78,39 @@ export class App extends Component {
     });
   };
 
+  /** Функция, получающая значение для поиска */
+  onSearchValue = (e) => {
+    this.setState({
+      labelSearch: e.target.value,
+    });
+  };
+
+  search(arr, value) {
+    return value
+      ? arr.filter((item) => {
+          return item.todo.toLowerCase().indexOf(value.toLowerCase()) > -1;
+        })
+      : arr;
+  }
+
   render() {
-    const { todos } = this.state;
+    const { todos, labelSearch } = this.state;
+    const visibleItems = this.search(todos, labelSearch);
     const doneCount = todos.filter((el) => el.done).length;
     const notDone = todos.length - doneCount;
     return (
       <div className="app">
         <AppHeader done={doneCount} notDone={notDone} />
         <div className=" filter d-flex">
-          <Search />
+          <Search onSearchValue={this.onSearchValue} labelSearch={this.state.labelSearch} />
           <ButtonFilter />
         </div>
         <TodoList
-          todos={todos}
+          todos={visibleItems}
           onDeleteItem={this.deleteItem}
           onToggleDone={this.onToggleDone}
           onToggleImportant={this.onToggleImportant}
+          labelSearch={labelSearch}
         />
         <PanelAddItem onAddItem={this.addItem} />
       </div>
