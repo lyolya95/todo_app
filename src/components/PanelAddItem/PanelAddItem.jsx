@@ -5,7 +5,8 @@ export class PanelAddItem extends Component {
   render() {
     const { onAddItem } = this.props;
     return (
-      <div className="panel-add-item">
+      <form className="panel-add-item d-flex">
+        <input type="text" placeholder="Enter todo..." className="form-control" onChange={this.onValueChange} />
         <button
           type="button"
           className="btn btn-outline-secondary"
@@ -15,7 +16,7 @@ export class PanelAddItem extends Component {
         >
           Add
         </button>
-      </div>
+      </form>
     );
   }
 }

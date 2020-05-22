@@ -84,8 +84,10 @@ export class App extends Component {
     return (
       <div className="app">
         <AppHeader done={doneCount} notDone={notDone} />
-        <Search />
-        <ButtonFilter />
+        <div className=" filter d-flex">
+          <Search />
+          <ButtonFilter />
+        </div>
         <TodoList
           todos={todos}
           onDeleteItem={this.deleteItem}

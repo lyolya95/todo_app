@@ -1,4 +1,9 @@
 .app {
-  position: relative;
-  margin: 0 20px;
+  max-width: 600px;
+  min-width: 500px;
+  margin: 0 auto;
+}
+
+.filter {
+  margin-bottom: 10px;
 }
